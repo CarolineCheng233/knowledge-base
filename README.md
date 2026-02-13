@@ -17,6 +17,12 @@
 
 ## 安装方法
 
+> **个人级 vs 项目级：** Claude Code 支持两种 skill 注册方式：
+> - **个人级**（推荐）：安装到 `~/.claude/skills/`，在所有项目中都可使用
+> - **项目级**：安装到项目的 `.claude/skills/`，仅在该项目中生效
+>
+> 以下方法默认安装为个人级 skill。如需项目级安装，将目标路径中的 `~/.claude/skills/` 替换为 `<你的项目>/.claude/skills/` 即可。
+
 ### 方法一：一键安装（推荐）
 
 将以下提示词复制粘贴到 Claude Code 中执行：
@@ -24,10 +30,11 @@
 ```
 请帮我安装 knowledge-base skill：
 1. 运行 git clone https://github.com/CarolineCheng233/knowledge-base.git /tmp/knowledge-base-skill
-2. 将 /tmp/knowledge-base-skill/SKILL.md 复制到 ~/.claude/skills/knowledge-base/SKILL.md
-3. 创建 ~/.claude/skills/knowledge-base/references/ 目录，将 /tmp/knowledge-base-skill/references/templates.md 复制进去
-4. 读取 SKILL.md 确认安装成功
-5. 清理临时文件 rm -rf /tmp/knowledge-base-skill
+2. 运行 mkdir -p ~/.claude/skills/knowledge-base/references
+3. 将 /tmp/knowledge-base-skill/SKILL.md 复制到 ~/.claude/skills/knowledge-base/SKILL.md
+4. 将 /tmp/knowledge-base-skill/references/templates.md 复制到 ~/.claude/skills/knowledge-base/references/templates.md
+5. 读取 SKILL.md 确认安装成功
+6. 清理临时文件 rm -rf /tmp/knowledge-base-skill
 ```
 
 ### 方法二：手动安装
@@ -48,9 +55,24 @@ cp knowledge-base/references/templates.md ~/.claude/skills/knowledge-base/refere
 
 3. 重启 Claude Code 即可生效。
 
-### 方法三：直接下载 .skill 文件
+### 方法三：下载 .skill 文件安装
 
-> 即将支持。后续会在 [GitHub Releases](https://github.com/CarolineCheng233/knowledge-base/releases) 提供打包好的 `.skill` 文件，下载后放到 `~/.claude/skills/` 即可。
+从 [GitHub Releases](https://github.com/CarolineCheng233/knowledge-base/releases) 下载 `knowledge-base.skill` 文件，然后解压到个人 skills 目录：
+
+```bash
+unzip knowledge-base.skill -d ~/.claude/skills/
+```
+
+解压后的目录结构：
+
+```
+~/.claude/skills/knowledge-base/
+├── SKILL.md
+└── references/
+    └── templates.md
+```
+
+重启 Claude Code 即可生效。
 
 ## 使用示例
 
@@ -64,6 +86,14 @@ cp knowledge-base/references/templates.md ~/.claude/skills/knowledge-base/refere
 记录一个工具：xxx
 写一篇学习笔记：xxx
 ```
+
+## 验证安装
+
+安装完成后，重启 Claude Code，输入 `/knowledge-base` 即可调用。如果提示 "unknown skill"，请检查：
+
+1. 文件是否位于 `~/.claude/skills/knowledge-base/SKILL.md`（个人级）或 `.claude/skills/knowledge-base/SKILL.md`（项目级）
+2. 目录结构是否正确（`SKILL.md` 必须在 `knowledge-base/` 子目录下，不能直接放在 `skills/` 下）
+3. 是否已重启 Claude Code 会话
 
 ## 目录结构
 
